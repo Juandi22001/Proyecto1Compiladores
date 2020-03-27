@@ -1037,7 +1037,24 @@ namespace Proyecto1Compi201807335
 
         private void Button1_Click(object sender, EventArgs e)
         {
-        
+            String ruta1 = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+
+            try
+            {
+                File.Delete(ruta1 + "\\AFN.dot");
+                File.Delete(ruta1 + "\\AFN.png ");
+                File.Delete(ruta1 + "\\AFD.dot");
+                File.Delete(ruta1 + "\\AFD.png ");
+                File.Delete(ruta1 + "\\Transiciones.dot");
+                File.Delete(ruta1 + "\\Transiciones.png ");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex);
+            }
+
 
 
             string Entrada = textos[tabControl1.SelectedIndex];
@@ -1108,10 +1125,33 @@ namespace Proyecto1Compi201807335
          ListaThomson.lista_lineal_nodos = PilaT.ElementAt(0).llenaListaLineal();
 
             Console.WriteLine(PilaT.ElementAt(0).getGraphviz());
+            Console.WriteLine(PilaT.ElementAt(0).GraphvizAfd());
+            Console.WriteLine(PilaT.ElementAt(0).GraphvizTrans());
 
 
             graficador gr = new graficador();
-            gr.graficar(PilaT.ElementAt(0).getGraphviz());
+            gr.graficar(PilaT.ElementAt(0).getGraphviz2());
+            gr.graficar2(PilaT.ElementAt(0).GraphvizAfd());
+            gr.graficar3(PilaT.ElementAt(0).GraphvizTrans());
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            ruta = ruta + "\\AFD.png ";
+            FileStream fs = new FileStream(ruta, FileMode.Open, FileAccess.Read);
+
+            pictureBox1.Image = Image.FromStream(fs);
+            fs.Close();
+
+
+            String ruta2 = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            ruta2 = ruta2 + "\\Transiciones.png ";
+            FileStream fs2 = new FileStream(ruta2, FileMode.Open, FileAccess.Read);
+
+            pictureBox1.Image = Image.FromStream(fs2);
+            fs2.Close();
+
+
+
+
+
         }
     }
     class graficador
@@ -1139,14 +1179,32 @@ namespace Proyecto1Compi201807335
         {
 
             grafica = new StringBuilder();
-            String rdot = ruta + "\\imagen.dot";
-            String rpng = ruta + "\\imagen.png ";
+            String rdot = ruta + "\\AFN.dot";
+            String rpng = ruta + "\\AFN.png ";
             grafica.Append(texto);
             this.generarDot(rdot, rpng);
 
         }
+        public void graficar2(String texto)
+        {
 
+            grafica = new StringBuilder();
+            String rdot = ruta + "\\AFD.dot";
+            String rpng = ruta + "\\AFD.png ";
+            grafica.Append(texto);
+            this.generarDot(rdot, rpng);
 
+        }
+        public void graficar3(String texto)
+        {
+
+            grafica = new StringBuilder();
+            String rdot = ruta + "\\Transiciones.dot";
+            String rpng = ruta + "\\Transiciones.png ";
+            grafica.Append(texto);
+            this.generarDot(rdot, rpng);
+
+        }
 
     }
 

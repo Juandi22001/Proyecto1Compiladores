@@ -18,8 +18,9 @@ namespace Proyecto1Compi201807335
 
         public static LinkedList<NodoThomson> lista_mov = new LinkedList<NodoThomson>();
         public static LinkedList<ListaEstados> ESTADOS = new LinkedList<ListaEstados>();
-        public static LinkedList<NodoThomson> lista_transiciones = new LinkedList<NodoThomson>();
-        public static LinkedList<NodoThomson> lista_auxestados = new LinkedList<NodoThomson>();
+      
+       // public static LinkedList<NodoThomson> lista_auxestados = new LinkedList<NodoThomson>();
+
         public static LinkedList<NodoThomson> lista_ceradura = new LinkedList<NodoThomson>();
         public static LinkedList<NodoThomson> lista_lineal_nodos = new LinkedList<NodoThomson>();
         // tipo = 0  lista simple 
@@ -59,7 +60,7 @@ namespace Proyecto1Compi201807335
 
             while (aux != null)
             {
-                Console.Write("siuuuu");
+
 
 
 
@@ -68,7 +69,6 @@ namespace Proyecto1Compi201807335
                     Console.WriteLine(x + "." + " ID: " + aux.GetEstado() + " nombrePuntero:" + aux.GetTranscision());
                     if (aux.sig2 != null)
                     {
-                        Console.Write("ESTE NODO TIENE 2 PUNTEROS.-.-.-.-.--.-.-.-.-.-.-.-.-.-.-.");
                         imprimirPorDebajo(aux.sig2);
                     }
                 }
@@ -76,8 +76,7 @@ namespace Proyecto1Compi201807335
                 x++;
                 aux = aux.sig1;
             }
-            Console.WriteLine("********");
-            Console.WriteLine();
+
         }
         public void imprimirPorDebajo(NodoThomson aux)
         {
@@ -85,7 +84,7 @@ namespace Proyecto1Compi201807335
             {
                 if (aux.GetTipo().CompareTo("or") == 0)
                 {
-                    Console.WriteLine("OR_ANIADO" + " ID: " + aux.GetEstado() + " nombrePuntero:" + aux.GetTranscision());
+
                     if (aux.sig2 != null)
                     {
 
@@ -184,8 +183,9 @@ namespace Proyecto1Compi201807335
                 aux = aux.sig1;
             }
 
-
+      
             return lista_lineal_nodos;
+    
         }
 
         public void llenaListaLineal(NodoThomson aux) // sobrecarga de metodo 
@@ -206,12 +206,15 @@ namespace Proyecto1Compi201807335
                 }
                 aux = aux.sig1;
             }
-
+        
         }
-        public string getGraphviz()
+
+        public string getGraphviz2()
         {
-            CompararE();
-            LLenar();
+
+         
+
+
             string ju = "digraph G {" + "\n";
 
 
@@ -230,6 +233,40 @@ namespace Proyecto1Compi201807335
                 }
             }
             ju += "\n" + "}";
+
+
+            return ju;
+        }
+        public string getGraphviz()
+        {
+
+            CompararE();
+
+            LLenar();
+            Union();
+            ImprimirAfd();
+
+
+            string ju = "digraph G {" + "\n";
+
+
+            ju += " rankdir = LR;  node[color = blue]";
+            foreach (NodoThomson alv in lista_lineal_nodos)
+            {
+                if (alv.sig1 != null)
+                {
+                    ju += "E" + alv.GetEstado() + "->" + "E" + alv.sig1.GetEstado() + "[label=\"" + alv.GetTranscision() + "\"]" + "\n";
+
+
+                }
+                if (alv.sig2 != null)
+                {
+                    ju += "E" + alv.GetEstado() + "->" + "E" + alv.sig2.GetEstado() + "[label=\"" + alv.GetTranscision() + "\"]" + "\n";
+                }
+            }
+            ju += "\n" + "}";
+
+        
             return ju;
         }
 
@@ -259,7 +296,6 @@ namespace Proyecto1Compi201807335
         }
         public void CompararE()
         {
-            Console.WriteLine("siuu");
             foreach (NodoThomson alv in lista_lineal_nodos)
             {
 
@@ -294,7 +330,7 @@ namespace Proyecto1Compi201807335
         {
             lista_ceradura.AddLast(n);
 
-
+     
             if (n.sig1 != null)
             {
                 if (n.GetTranscision().Equals(trans))
@@ -322,35 +358,37 @@ namespace Proyecto1Compi201807335
         public void RecursivoMov(NodoThomson N, string Trans)
         {
 
-            foreach (NodoThomson alv in lista_ceradura)
-            {
-                if (alv.sig1 != null)
+   
+                if (N.sig1 != null)
                 {
-                    if (alv.GetTranscision().Equals(Trans))
+   
+                    if (N.GetTranscision().Equals(Trans))
                     {
-                        lista_mov.AddLast(alv.sig1);
+              
+                        lista_mov.AddLast(N.sig1);
                         RecursivoMov(N.sig1, Trans);
 
                     }
 
                 }
-                if (alv.sig2 != null)
+                if (N.sig2 != null)
                 {
 
-                    if (alv.GetTranscision().Equals(Trans))
+              
+                    if (N.GetTranscision().Equals(Trans))
                     {
-                        lista_mov.AddLast(alv.sig2);
+                    
+                        lista_mov.AddLast(N.sig2);
 
                         RecursivoMov(N.sig2, Trans);
                     }
                 }
-            }
+            
         }
         public void RecursivoE()
         {
 
             foreach (NodoThomson alv in lista_mov)
-
 
             {
                 if (alv.sig1 != null)
@@ -367,27 +405,39 @@ namespace Proyecto1Compi201807335
             }
 
         }
-        public bool repetido3(LinkedList<ListaEstados> L)
+        public bool repetido3(LinkedList<NodoThomson> L)
         {
-            if (ESTADOS.Count == L.Count)
+            if (lista_ceradura.Count == L.Count)
             {
 
-                return CompararListas(ESTADOS, L);
+                return CompararListas(lista_ceradura, L);
 
             }
-            else {
+            else
+            {
                 return false;
             }
         }
-
-        public  bool CompararListas (LinkedList<ListaEstados> L , LinkedList<ListaEstados> L2)
+       /* public static bool repetido4(LinkedList)
+        {
+            foreach (ListaEstados nodo in ESTADOS)
+            {
+                if (e==nodo.GetEstado())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        */
+        public bool CompararListas(LinkedList<NodoThomson> L, LinkedList<NodoThomson> L2)
         {
             bool aux = false;
-            foreach (ListaEstados Aux1 in L)
+            foreach (NodoThomson Aux1 in L)
             {
-                foreach (ListaEstados AUX2 in L2)
+                foreach (NodoThomson AUX2 in L2)
                 {
-                    if (Aux1.GetEstado()==AUX2.GetEstado())
+                    if (Aux1.GetEstado() == AUX2.GetEstado())
                     {
                         aux = true;
                     }
@@ -399,43 +449,199 @@ namespace Proyecto1Compi201807335
 
             }
             return aux;
-}
+        }
         public void Union()
         {
-
+            
+            RecursivoCerr(lista_lineal_nodos.First(), "epsilon");
 
             ListaEstados L = new ListaEstados(lista_ceradura);
 
-            RecursivoCerr(lista_lineal_nodos.First(), "epsilon");
             ESTADOS.AddLast(L);
             lista_ceradura = new LinkedList<NodoThomson>();
 
-            foreach (NodoThomson alv in L.GetLista())
-            {
-                foreach (string alvTrans in lista_terminal)
-                {
-                    RecursivoMov(alv, alvTrans);
-                    foreach (NodoThomson item in lista_mov)
-                    {
-                        RecursivoCerr(item, "epsilon");
-                        foreach (ListaEstados AUX in ESTADOS)
-                        {
-                            
+            lista_mov = new LinkedList<NodoThomson>();
+            UnionSiguiente(L);
 
-                        }
-                    }
-                }
-           
-            }
-         
 
-                
+
+
 
 
         }
-    }
+        public string GraphvizAfd()
+        {
 
+
+
+            string ju = "digraph G {" + "\n";
+
+
+            ju += " rankdir = LR;  node[color = blue]";
+            foreach (ListaEstados alv in ESTADOS)
+            {
+                foreach (ListaEstados alv2 in alv.GetListaEstados())
+                {
+
+                    ju += "E" + alv.GetEstado() + "->" + "E" + alv2.GetEstado() + "[label=\"" + alv2.GetTransicion() + "\"]" + "\n";
+
+                }
+
+
+            }
+            ju += "\n" + "}";
+
+
+            return ju;
+        }
+        public string GraphvizTrans()
+        {
+
+
+
+            string ju = "digraph G {" + "\n";
+
+
+            ju += " tbl[shape= plaintext label =<table border = '4' cellbolder= '3' color = 'blue' cellspacing ='4' >" + "\n";
+            ju += " <tr> <td color = \"blue\" colspan =\'" + (ESTADOS.Count + 1) + "\'> Tabla efe de transiciones </td> </tr>" + "\n";
+            ju += "<tr> <td color = \"blue\"> </td>" + "\n";
+
+            foreach (ListaEstados alvx in ESTADOS)
+            {
+                ju += "<td color = \"blue\"> { " + alvx.GetEstado() + "}</td>" + "\n";
+            }
+            ju += "</tr>" + "\n";
+            ju += "<tr>" + "\n";
+            foreach (string trans in lista_terminal)
+            {
+      
+
+
+                foreach (ListaEstados alv in ESTADOS)
+            {
+
+
+                    foreach (ListaEstados alv2 in alv.GetListaEstados())
+                    {
+                        
+                        if (trans.Equals(alv2.GetTransicion()))
+                        {
+                            ju += "<td>" + "\n";
+                            ju += alv2.GetEstado(); ju += "</td>" + "\n";
+                        }
+
+
+                 
+                    }
+                }
+                
+
+            }
+            ju += "</tr>" + "\n";
+
+            ju += "</table>]" + "\n";
+            ju += "\n" + "}" + "\n";
+
+
+            return ju;
+        }
+        public void ImprimirAfd()
+        {
+            Console.WriteLine("////Inicio//////");
+            foreach (ListaEstados alv2 in ESTADOS)
+            {
+
+                Console.WriteLine(alv2.GetEstado());
+
+                foreach (ListaEstados alv3 in alv2.GetListaEstados())
+
+
+                {
+                    Console.WriteLine("\t" + alv2.GetEstado() + alv3.GetTransicion() + "->" + alv3.GetEstado());
+                }
+
+            }
+        }
   
+            public void UnionSiguiente(ListaEstados L)
+        {
+            foreach (string alvTrans in lista_terminal)
+            {
+            //    Console.WriteLine(alvTrans + "aquiiiiii");
+                foreach (NodoThomson alv in L.GetListaCerradura())
+            {
+          
+                    RecursivoMov(alv, alvTrans);
+                   
+
+                }
+                foreach (NodoThomson item in lista_mov)
+                {
+                    RecursivoCerr(item, "epsilon");
+                    bool aux = false;
+
+                    foreach (ListaEstados AUX in ESTADOS)
+                    {
+                        if (repetido3(AUX.GetListaCerradura()) == true  )
+                        {
+                     
+
+
+                      
+                            L.GetListaEstados().AddLast(new ListaEstados( AUX,alvTrans));
+                            lista_ceradura = new LinkedList<NodoThomson>();
+                            Console.WriteLine("repetido");
+                            lista_mov = new LinkedList<NodoThomson>();
+                            aux = true;
+                        }
+
+                    }
+                    if (aux == false)
+                        {
+                        bool aux2 = false;
+                        ListaEstados L2 = new ListaEstados(lista_ceradura);
+                        foreach (NodoThomson LOOL in lista_ceradura)
+                        {
+                            foreach (NodoThomson ALVVV in lista_lineal_nodos)
+                            {
+                                if (ALVVV.sig1!=null)
+                                {
+                                    if (LOOL.GetEstado().Equals(ALVVV.GetEstado()))
+                                    {
+                                        Console.WriteLine("SIUUUUUUUUUUUUUUUUUUUUUUUUUUUU"+LOOL.GetEstado());
+                                        ALVVV.SetTipo("FIN");
+                                    }
+                                }
+
+                                else if (ALVVV.sig2 != null)
+                                {
+                                    if (LOOL.GetEstado().Equals(ALVVV.GetEstado()))
+                                    {
+                                        ALVVV.SetTipo("FIN");
+                                        Console.WriteLine("SIUUUUUUUUUUUUUUUUUUUUUUUUUUUU" + LOOL.GetEstado());
+
+                                    }
+                                }
+                            }
+                            
+                        }
+
+                        ESTADOS.AddLast(L2);
+                        L .GetListaEstados().AddLast(new ListaEstados(L2, alvTrans));
+
+                        lista_ceradura = new LinkedList<NodoThomson>();
+                        Console.WriteLine("nuevoo "+"->");
+                        lista_mov = new LinkedList<NodoThomson>();
+
+                        UnionSiguiente(L2);
+                    }
+
+                }
+            }
+        }
+
+
+    }
 }
 
 
