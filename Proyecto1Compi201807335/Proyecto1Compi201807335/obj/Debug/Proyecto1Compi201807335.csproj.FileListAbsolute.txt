@@ -1,0 +1,10 @@
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\bin\Debug\Proyecto1Compi201807335.exe.config
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\bin\Debug\Proyecto1Compi201807335.exe
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\bin\Debug\Proyecto1Compi201807335.pdb
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.csprojAssemblyReference.cache
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.Form1.resources
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.Properties.Resources.resources
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.csproj.GenerateResource.cache
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.csproj.CoreCompileInputs.cache
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.exe
+C:\Users\JUAN DIEGO ALVARADO\source\repos\Proyecto1Compi201807335\Proyecto1Compi201807335\obj\Debug\Proyecto1Compi201807335.pdb
